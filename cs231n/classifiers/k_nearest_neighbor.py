@@ -1,5 +1,6 @@
 import numpy as np
-from collections import Counter
+from past.builtins import xrange
+
 
 class KNearestNeighbor(object):
   """ a kNN classifier with L2 distance """
@@ -72,7 +73,7 @@ class KNearestNeighbor(object):
         # training point, and store the result in dists[i, j]. You should   #
         # not use a loop over dimension.                                    #
         #####################################################################
-        dists[i, j] = np.linalg.norm(X[i] - self.X_train[j])
+        pass
         #####################################################################
         #                       END OF YOUR CODE                            #
         #####################################################################
@@ -94,7 +95,7 @@ class KNearestNeighbor(object):
       # Compute the l2 distance between the ith test point and all training #
       # points, and store the result in dists[i, :].                        #
       #######################################################################
-      dists[i, :] = np.linalg.norm(self.X_train - X[i], axis=1)
+      pass
       #######################################################################
       #                         END OF YOUR CODE                            #
       #######################################################################
@@ -109,7 +110,7 @@ class KNearestNeighbor(object):
     """
     num_test = X.shape[0]
     num_train = self.X_train.shape[0]
-    dists = np.zeros((num_test, num_train))
+    dists = np.zeros((num_test, num_train)) 
     #########################################################################
     # TODO:                                                                 #
     # Compute the l2 distance between all test points and all training      #
@@ -122,20 +123,7 @@ class KNearestNeighbor(object):
     # HINT: Try to formulate the l2 distance using matrix multiplication    #
     #       and two broadcast sums.                                         #
     #########################################################################
-    
-    # LaTeX
-    # d^2_{ij} = \sum_k (x_{ik} - t_{jk})^2
-    # d^2_{ij} = \sum_k (x^2_{ik} + t^2_{jk} - 2x_{ik}t_{jk})
-    # d^2_{ij} = \sum_k x^2_{ik} + \sum_k t^2_{jk} - 2\sum_k x_{ik}t_{jk}
-    
-    X_sum_of_squares = np.array([np.sum(np.square(X), axis=1)] * num_train).T
-    T_sum_of_squares = np.array([np.sum(np.square(self.X_train), axis=1)] * num_test)
-    X_times_T = np.dot(X, self.X_train.T)
-    # print np.shape(X_sum_of_squares)
-    # print np.shape(T_sum_of_squares)
-    # print np.shape(X_times_T)
-    dists = np.sqrt(X_sum_of_squares + T_sum_of_squares - (2 * X_times_T))
-    
+    pass
     #########################################################################
     #                         END OF YOUR CODE                              #
     #########################################################################
@@ -167,8 +155,7 @@ class KNearestNeighbor(object):
       # neighbors. Store these labels in closest_y.                           #
       # Hint: Look up the function numpy.argsort.                             #
       #########################################################################
-      indices_neighbors = np.argsort(dists[i])[:k]
-      closest_y = [self.y_train[i_neighbor] for i_neighbor in indices_neighbors]
+      pass
       #########################################################################
       # TODO:                                                                 #
       # Now that you have found the labels of the k nearest neighbors, you    #
@@ -176,18 +163,7 @@ class KNearestNeighbor(object):
       # Store this label in y_pred[i]. Break ties by choosing the smaller     #
       # label.                                                                #
       #########################################################################
-      counter = Counter(closest_y)
-      candidate = ''
-      highest_count = -1
-      for l, cnt in counter.most_common(k):
-        if cnt > highest_count:
-          highest_count = cnt
-          candidate = l
-        elif cnt == highest_count and candidate < l:
-          candidate = l
-        else:
-          break
-      y_pred[i] = candidate
+      pass
       #########################################################################
       #                           END OF YOUR CODE                            # 
       #########################################################################

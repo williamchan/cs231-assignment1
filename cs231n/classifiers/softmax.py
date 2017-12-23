@@ -1,5 +1,6 @@
 import numpy as np
 from random import shuffle
+from past.builtins import xrange
 
 def softmax_loss_naive(W, X, y, reg):
   """
@@ -29,25 +30,7 @@ def softmax_loss_naive(W, X, y, reg):
   # here, it is easy to run into numeric instability. Don't forget the        #
   # regularization!                                                           #
   #############################################################################
-  num_classes = W.shape[1]
-  num_train = X.shape[0]
-  for i in xrange(num_train):
-    scores = X[i].dot(W)
-    correct_class = y[i]
-    
-    # Normalization trick to avoid numerical instability
-    scores -= np.max(scores)
-    exp_scores = np.exp(scores)
-    probs = exp_scores / np.sum(exp_scores)
-    loss += -np.log(probs[correct_class])
-
-    for k in range(num_classes):
-        dW[:, k] += (probs[k] - (k == correct_class)) * X[i]
-
-  loss /= num_train
-  loss += 0.5 * reg * np.sum(W * W)
-  dW /= num_train
-  dW += reg * W
+  pass
   #############################################################################
   #                          END OF YOUR CODE                                 #
   #############################################################################
@@ -71,26 +54,7 @@ def softmax_loss_vectorized(W, X, y, reg):
   # here, it is easy to run into numeric instability. Don't forget the        #
   # regularization!                                                           #
   #############################################################################
-  num_train = X.shape[0]
-  scores = X.dot(W)
-  
-  # from http://cs231n.github.io/neural-networks-case-study/#loss
-  # get unnormalized probabilities
-  exp_scores = np.exp(scores)
-  # normalize them for each example
-  probs = exp_scores / np.sum(exp_scores, axis=1, keepdims=True)
-  correct_logprobs = -np.log(probs[range(num_train),y])
-  data_loss = np.sum(correct_logprobs)/num_train
-  reg_loss = 0.5 * reg * np.sum(W * W) # regularization
-  loss = data_loss + reg_loss
-
-  # http://cs231n.github.io/neural-networks-case-study/#grad
-  dscores = probs
-  dscores[range(num_train),y] -= 1
-  dscores /= num_train
-  dW = np.dot(X.T, dscores)
-  dW += reg * W
-  
+  pass
   #############################################################################
   #                          END OF YOUR CODE                                 #
   #############################################################################
